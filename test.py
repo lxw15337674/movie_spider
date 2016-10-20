@@ -7,19 +7,22 @@ class demo(object):
     def __init__(self):
         self.datas = []
 
-    def get_baiduyun(self, url):
+    def get_downurl(self, url):
         soup = self.downloading(url)
         baiduyun = soup.find('pre')
-        list = []
-        for a in baiduyun:
-            try:
-                b = a.split('\n', 2)
-                list.append(b[:2])
-            except:
-                pass
-        yunurl = soup.find('pre').find('a')['href']
-        a = "磁力链接:" + list[0][1]
-        b = '百度云:' + yunurl + list[1][0]
+        try:
+            # 磁力链接地址
+            ciliurl = baiduyun.find(text=re.compile("magne.*")).replace("\n", "")[6:-5]
+            a = "磁力链接:" + ciliurl
+        except:
+            a = ""
+        # 百度云提取码
+        try:
+            tiquma = baiduyun.find(text=re.compile("提取码.*")).replace("\n", "")
+            yunurl = soup.find('pre').find('a')['href']
+            b = '百度云:' + yunurl + tiquma
+        except:
+            b = ""
         return a, b
 
     def get_data(self, soup):
@@ -37,8 +40,11 @@ class demo(object):
                     jpg = img['src']
             except:
                 continue
-            Magnet_URI, baiduurl = self.get_baiduyun(url)
-            list = [title, url, jpg, Magnet_URI, baiduurl]
+            Magnet_URI, baiduurl = self.get_downurl(url)
+            if Magnet_URI :
+                list = [title, url, jpg, Magnet_URI, baiduurl]
+            else:
+                list = [title, url, jpg, baiduurl]
             print(list)
             self.datas.append(list)
 

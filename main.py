@@ -1,5 +1,4 @@
 from tkinter import *
-import tkinter.messagebox as messagebox
 import spider
 
 
@@ -19,8 +18,7 @@ class Application(Frame):
 
     def pachong(self):
         pachong_url = self.nameInput.get()
-        # self.spider.create_folder()
-        self.spider.downloading(pachong_url)
+        self.spider.main(pachong_url)
 
     def start(self):
         self.master.geometry('1024x800')
