@@ -20,7 +20,8 @@ class Application(Frame):
         self.alertButton1.pack()
         self.alertButton2.pack()
         self.quitButton.pack()
-    #窗口设置
+
+    # 窗口设置
     def start(self):
         self.master.geometry('1024x800')
         self.master.title("hello_world")
@@ -35,7 +36,6 @@ class Application(Frame):
     def morepachong(self):
         pachong_url = self.nameInput.get()
         self.spider.moremain(pachong_url)
-
 
 
 if __name__ == '__main__':

@@ -1,13 +1,5 @@
-import test1
+import subprocess
 
-class a(test1.a1):
-    def b(self):
-        print('a.b')
-
-    def c(self):
-        print(a2())
-
-
-if __name__ == '__main__':
-    b = a()
-    b.c()
+print('$ nslookup www.python.org')
+r = subprocess.call(['nslookup', 'www.python.org'])
+print('Exit code:', r)
