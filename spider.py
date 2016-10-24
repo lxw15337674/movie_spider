@@ -1,12 +1,14 @@
 from bs4 import BeautifulSoup
 import urllib.request
 import re
+from multiprocessing import Pool
 
 
 class spider(object):
     def __init__(self):
         self.datas = []
 
+    # 获取单个网页中下载地址
     def get_downurl(self, url):
         soup = self.downloading(url)
         baiduyun = soup.find('pre')
@@ -25,6 +27,7 @@ class spider(object):
             b = ""
         return a, b
 
+    # 获取单个网页中所有信息
     def get_data(self, soup):
         for a in soup.find_all('article'):
             b = a.find('h2', class_="entry-title")
@@ -48,6 +51,14 @@ class spider(object):
             print(list)
             self.datas.append(list)
 
+    # 获取网站page数目
+    def getpage(self, url):
+        soup = self.downloading(url)
+        url = soup.find('div', class_="wp-pagenavi").find('a', class_="last")
+        a = re.search("\d+", url['href'])
+        return a.group(0)
+
+    # 爬取网页
     def downloading(self, urls):
         if urls is None:
             return None
@@ -59,6 +70,23 @@ class spider(object):
         soup = BeautifulSoup(html, 'html.parser')
         return soup
 
-    def main(self, urls):
+    # 爬取单个网站条目
+    def pagemain(self, urls, page):
+        if page != 1: print('进程%s' % page)
         soup = self.downloading(urls)
         self.get_data(soup)
+
+    # 单进程爬取整个网站条目
+    def main(self, urls):
+        pages = self.getpage(urls)
+        for page in range(1, int(pages) + 1):
+            self.pagemain("https://blog.reimu.net/page/" + str(page), page)
+
+    # 多进程爬取整个网站条目
+    def moremain(self, urls):
+        pages = self.getpage(urls)
+        p = Pool(5)
+        for page in range(1, int(pages) + 1):
+            p.apply_async(self.pagemain, args=("https://blog.reimu.net/page/" + str(page), page))
+        p.close()
+        p.join()
