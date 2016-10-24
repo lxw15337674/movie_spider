@@ -6,8 +6,9 @@ import spider
 class Application(Frame):
     def __init__(self):
         Frame.__init__(self)
-        self.alertButton1 = Button(self, text='单进程爬取', command=pachong.pachong)
-        self.alertButton2 = Button(self, text='多进程爬取', command=pachong.morepachong)
+        self.spider = spider.spider()
+        self.alertButton1 = Button(self, text='单进程爬取', command=self.pachong)
+        self.alertButton2 = Button(self, text='多进程爬取', command=self.morepachong)
         self.nameInput = Entry(self, width=50)
         self.quitButton = Button(self, text='Quit', command=self.quit)
         self.createWidgets()
@@ -19,52 +20,24 @@ class Application(Frame):
         self.alertButton1.pack()
         self.alertButton2.pack()
         self.quitButton.pack()
-
+    #窗口设置
     def start(self):
         self.master.geometry('1024x800')
         self.master.title("hello_world")
         self.mainloop()
 
-
-class pachong():
-    def __init__(self):
-        self.spider = spider.spider()
-
+    # 单进程爬虫功能
     def pachong(self):
-        pachong_url = Application.nameInput.get()
+        pachong_url = self.nameInput.get()
         self.spider.main(pachong_url)
 
+    # 多进程爬虫功能
     def morepachong(self):
-        pachong_url = Application.nameInput.get()
+        pachong_url = self.nameInput.get()
         self.spider.moremain(pachong_url)
 
 
-class thread():
-    def __init__(self):
-        app = Application()
-        app.start()
-
-    def pachong(self):
-        self.pachong = True
-        self.thread1 = threading.Thread(target=pachong.pachong())
-        self.thread1.start()
-
-    def pgo(self):
-        self.morepachong = True
-        self.thread2 = threading.Thread(target=pachong.morepachong())
-        self.thread2.start()
-
-    def stop(self):
-        self.pachong = False
-        self.morepachong = False
-
-    def destory(self):
-        self.stop()
-
-    def workerThread1(self):
-        while self.running:
-            print('1')
-
 
 if __name__ == '__main__':
-    thread()
+    app = Application()
+    app.start()
