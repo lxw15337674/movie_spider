@@ -1,3 +1,4 @@
+
 import threading
 from tkinter import *
 import spider
@@ -12,7 +13,6 @@ class Application(Frame):
         self.quitButton = Button(self, text='Quit', command=self.quit)
         self.createWidgets()
 
-    #GUI界面创建
     def createWidgets(self):
         self.pack()
         self.nameInput.pack(padx=100, pady=20, )
@@ -37,15 +37,15 @@ class Application(Frame):
         pachong_url = self.nameInput.get()
         self.spider.moremain(pachong_url)
 
-#功能创建线程并运行
 def thread_it(func, *args):
+    '''将函数打包进线程'''
     # 创建
     t = threading.Thread(target=func, args=args)
-    # 守护
+    # 守护 !!!
     t.setDaemon(True)
     # 启动
     t.start()
-    # 阻塞--卡死界面
+    # 阻塞--卡死界面！
     # t.join()
 
 if __name__ == '__main__':
