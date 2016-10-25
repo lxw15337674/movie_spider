@@ -1,6 +1,7 @@
 import tkinter as tk
 import time
 import threading
+import main
 
 songs = ['爱情买卖', '朋友', '回家过年', '好日子']
 movies = ['阿凡达', '猩球崛起']
@@ -38,5 +39,5 @@ text.pack()
 
 tk.Button(root, text='音乐', command = thread_it(music, songs)).pack()
 tk.Button(root, text='电影', command = lambda: thread_it(movie, movies, text)).pack()
-
+main
 root.mainloop()

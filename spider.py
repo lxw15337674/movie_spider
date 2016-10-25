@@ -3,11 +3,7 @@ import urllib.request
 import re
 from multiprocessing import Pool
 
-
 class spider(object):
-    def __init__(self):
-        self.datas = []
-
     # 获取单个网页中下载地址
     def get_downurl(self, url):
         soup = self.downloading(url)
@@ -49,7 +45,6 @@ class spider(object):
             else:
                 list = [title, url, jpg, baiduurl]
             print(list)
-            self.datas.append(list)
 
     # 获取网站page数目
     def getpage(self, url):
@@ -71,8 +66,7 @@ class spider(object):
         return soup
 
     # 爬取单个网站条目
-    def pagemain(self, urls, page):
-        if page != 1: print('进程%s' % page)
+    def pagemain(self, urls):
         soup = self.downloading(urls)
         self.get_data(soup)
 
