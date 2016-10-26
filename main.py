@@ -1,5 +1,8 @@
 import threading
 from tkinter import *
+
+import time
+
 import spider
 
 
@@ -19,7 +22,7 @@ class Application(Frame):
     def createWidgets(self):
         self.pack()
         self.text.pack()
-        self.nameInput.pack(padx=100, pady=20, )
+        self.nameInput.pack(padx=100, pady=20)
         self.nameInput.insert(END,'https://blog.reimu.net/')
         self.alertButton1.pack()
         self.alertButton2.pack()
@@ -32,23 +35,29 @@ class Application(Frame):
     # 窗口设置
     def start(self):
         self.createWidgets()
-        self.master.geometry('1024x800')
+        self.master.geometry('600x400')
         self.master.title("hello_world")
         self.mainloop()
 
     # 单进程爬取单个网页功能
     def pachong(self):
+        start = time.time()
         self.insert_text('爬取开始\n')
         pachong_url = self.nameInput.get()
-        self.spider.pagemain(pachong_url)
-        self.insert_text('爬取结束\n')
+        self.spider.main(pachong_url)
+        end = time.time()
+        self.insert_text("爬取结束,用时%s秒" % (round(end - start, 3)))
+
 
     # 多进程爬取整个网站功能
     def morepachong(self):
+        start = time.time()
         self.insert_text('爬取开始\n')
         pachong_url = self.nameInput.get()
         self.spider.moremain(pachong_url)
-        self.insert_text('爬取结束\n')
+        end = time.time()
+        self.insert_text("爬取结束,用时%s秒" % (round(end - start, 3)))
+
 
 # 功能创建线程并运行
 def thread_it(func, *args):
