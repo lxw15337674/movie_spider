@@ -67,9 +67,6 @@ def thread_it(func, *args):
     t.setDaemon(True)
     # 启动
     t.start()
-    # 阻塞--卡死界面
-    # t.join()
-
 
 if __name__ == '__main__':
     app = Application()
