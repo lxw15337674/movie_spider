@@ -1,0 +1,23 @@
+#Windows:
+Thumbs.db
+ehthumbs.db
+Deskyop.ini
+
+# Python:
+*.py[cod]
+*.so
+*.egg
+*.egg-info
+dist
+build
+
+#pycharm
+.idea
+
+#venv
+venv
+
+#ÅÀÈ¡ÍøÒ³
+.html
+
+__pycache__
